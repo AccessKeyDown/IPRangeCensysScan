@@ -11,3 +11,8 @@
 /home/iamgroot/Documents/programs/dotnet/IPRangeCensysScan/obj/Debug/netcoreapp3.1/IPRangeCensysScan.dll
 /home/iamgroot/Documents/programs/dotnet/IPRangeCensysScan/obj/Debug/netcoreapp3.1/IPRangeCensysScan.pdb
 /home/iamgroot/Documents/programs/dotnet/IPRangeCensysScan/obj/Debug/netcoreapp3.1/IPRangeCensysScan.genruntimeconfig.cache
+/home/iamgroot/Documents/programs/dotnet/IPRangeCensysScan/bin/Debug/netcoreapp3.1/Newtonsoft.Json.dll
+/home/iamgroot/Documents/programs/dotnet/IPRangeCensysScan/bin/Debug/netcoreapp3.1/Refit.dll
+/home/iamgroot/Documents/programs/dotnet/IPRangeCensysScan/bin/Debug/netcoreapp3.1/System.Text.Json.dll
+/home/iamgroot/Documents/programs/dotnet/IPRangeCensysScan/obj/Debug/netcoreapp3.1/RefitStubs.g.cs
+/home/iamgroot/Documents/programs/dotnet/IPRangeCensysScan/obj/Debug/netcoreapp3.1/IPRangeCensysScan.csproj.CopyComplete
