@@ -54,11 +54,19 @@ namespace IPRangeCensysScan
         }
 
         /// <inheritdoc />
-        Task<ApiResponse<CensysSearchResult>> ICensysApi.Search(string index)
+        Task<ApiResponse<CensysSearchResult>> ICensysApi.Search(string index, CensysSearchPost body)
         {
-            var arguments = new object[] { index };
-            var func = requestBuilder.BuildRestResultFuncForMethod("Search", new Type[] { typeof(string) });
+            var arguments = new object[] { index, body };
+            var func = requestBuilder.BuildRestResultFuncForMethod("Search", new Type[] { typeof(string), typeof(CensysSearchPost) });
             return (Task<ApiResponse<CensysSearchResult>>)func(Client, arguments);
+        }
+
+        /// <inheritdoc />
+        Task<CensysViewResult> ICensysApi.View(string index, string id)
+        {
+            var arguments = new object[] { index, id };
+            var func = requestBuilder.BuildRestResultFuncForMethod("View", new Type[] { typeof(string), typeof(string) });
+            return (Task<CensysViewResult>)func(Client, arguments);
         }
     }
 }

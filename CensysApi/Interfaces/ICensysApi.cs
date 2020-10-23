@@ -3,9 +3,13 @@ using System.Threading.Tasks;
 
 namespace IPRangeCensysScan
 {
+    [Headers("Authorization: Basic")]
     public interface ICensysApi
     {
-        [Post("/api/v1/search")]
-        Task<ApiResponse<CensysSearchResult>> Search([Query]string index);
+        [Post("/search")]
+        Task<ApiResponse<CensysSearchResult>> Search([Query]string index, [Body]CensysSearchPost body);
+
+        [Get("/view/{index}/{id}")]
+        Task<CensysViewResult> View(string index, string id);
     }
 }
