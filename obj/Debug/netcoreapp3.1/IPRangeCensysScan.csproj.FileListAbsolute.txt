@@ -1,0 +1,13 @@
+/home/iamgroot/Documents/programs/dotnet/IPRangeCensysScan/bin/Debug/netcoreapp3.1/IPRangeCensysScan
+/home/iamgroot/Documents/programs/dotnet/IPRangeCensysScan/bin/Debug/netcoreapp3.1/IPRangeCensysScan.deps.json
+/home/iamgroot/Documents/programs/dotnet/IPRangeCensysScan/bin/Debug/netcoreapp3.1/IPRangeCensysScan.runtimeconfig.json
+/home/iamgroot/Documents/programs/dotnet/IPRangeCensysScan/bin/Debug/netcoreapp3.1/IPRangeCensysScan.runtimeconfig.dev.json
+/home/iamgroot/Documents/programs/dotnet/IPRangeCensysScan/bin/Debug/netcoreapp3.1/IPRangeCensysScan.dll
+/home/iamgroot/Documents/programs/dotnet/IPRangeCensysScan/bin/Debug/netcoreapp3.1/IPRangeCensysScan.pdb
+/home/iamgroot/Documents/programs/dotnet/IPRangeCensysScan/obj/Debug/netcoreapp3.1/IPRangeCensysScan.csprojAssemblyReference.cache
+/home/iamgroot/Documents/programs/dotnet/IPRangeCensysScan/obj/Debug/netcoreapp3.1/IPRangeCensysScan.AssemblyInfoInputs.cache
+/home/iamgroot/Documents/programs/dotnet/IPRangeCensysScan/obj/Debug/netcoreapp3.1/IPRangeCensysScan.AssemblyInfo.cs
+/home/iamgroot/Documents/programs/dotnet/IPRangeCensysScan/obj/Debug/netcoreapp3.1/IPRangeCensysScan.csproj.CoreCompileInputs.cache
+/home/iamgroot/Documents/programs/dotnet/IPRangeCensysScan/obj/Debug/netcoreapp3.1/IPRangeCensysScan.dll
+/home/iamgroot/Documents/programs/dotnet/IPRangeCensysScan/obj/Debug/netcoreapp3.1/IPRangeCensysScan.pdb
+/home/iamgroot/Documents/programs/dotnet/IPRangeCensysScan/obj/Debug/netcoreapp3.1/IPRangeCensysScan.genruntimeconfig.cache
