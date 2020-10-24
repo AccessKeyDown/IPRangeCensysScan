@@ -2,9 +2,9 @@ namespace IPRangeCensysScan
 {
     public class CensysSearchPost
     {
-        public string  Query { get; set; }
-        public int  Page { get; set; }
-        public string  Fields { get; set; }
-        public string  Flatten { get; set; }
+        public string  query { get; set; }
+        // public int  page { get; set; }
+        // public string[]  fields { get; set; }
+        // public string  flatten { get; set; }
     }
 }
