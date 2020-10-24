@@ -13,6 +13,7 @@ namespace IPRangeCensysScan
 
         public DbSet<IpRange> IpRanges { get; set; }
         public DbSet<CensysData> CensysDatas { get; set; }
+        public DbSet<CensysAccount> CensysAccounts { get; set; }
        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlite(_connectionString, options =>
@@ -52,5 +53,13 @@ namespace IPRangeCensysScan
          public string StatusCode { get; set; }
          public string Message { get; set; }
          public IpRange IpRange { get; set; }
+     }
+
+    public class CensysAccount
+    {
+        [Key]
+        public string API_ID { get; set; }
+
+        public string Secret { get; set; }
      }
 }

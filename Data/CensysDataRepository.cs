@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.IO;
 using System.Reflection;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 
 namespace IPRangeCensysScan
@@ -41,7 +42,7 @@ namespace IPRangeCensysScan
              }
         }
 
-         public async void BulkInsertRangeWithJsonData(List<CensysData> censysDataList)
+        public async void BulkInsertRangeWithJsonData(List<CensysData> censysDataList)
         {
              using (var dbContext = new DataDbContext())
              {
@@ -50,6 +51,15 @@ namespace IPRangeCensysScan
                  await dbContext.CensysDatas.AddRangeAsync(censysDataList);
                  await dbContext.SaveChangesAsync();
              }
+        }
+
+        public async Task<List<CensysAccount>> GetAllCensysAccounts()
+        {
+            using(var dbcontext = new DataDbContext())
+            {
+                var listOfAccounts = await dbcontext.CensysAccounts.ToListAsync();
+                return listOfAccounts;
+            }
         }
     }
 }

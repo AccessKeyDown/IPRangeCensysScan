@@ -14,10 +14,10 @@ namespace IPRangeCensysScan
         private readonly ICensysApi _api;
         private readonly AuthenticationHeaderValue _authorizationHeader;
         private const string _baseUrl = "https://censys.io/api/v1";
-        public CensysApiServicee()
+        public CensysApiServicee(string _API_ID, string _Secret)
         {
-            var API_ID = "e3d9803a-4a6f-4596-b79b-be59de79f5d7";
-            var Secret = "1e0WbVIM2qTQSzhmOUCIQ61xTLYXfQwW";
+            var API_ID = _API_ID;
+            var Secret = _Secret;
             var authHeader = Convert.ToBase64String(Encoding.GetEncoding("ISO-8859-1").GetBytes(API_ID + ":" + Secret));
             var baseAddress = "https://censys.io/api/v1";
             _authorizationHeader = new System.Net.Http.Headers.AuthenticationHeaderValue("Basic", authHeader);
@@ -95,6 +95,23 @@ namespace IPRangeCensysScan
                         ResponseMessage = message,
                         ResponseStatusCode = response.StatusCode.ToString()
                     };
+            }
+        }
+
+        public async Task<string> GetAccountData()
+        {
+            using(var client = new HttpClient())
+            {
+                client.DefaultRequestHeaders.Authorization = _authorizationHeader;
+                var result = await client.GetAsync($"{_baseUrl}/account");
+                if( ((int)result.StatusCode >= 200) && ((int)result.StatusCode <= 299))
+                {
+                    var jsonResult = await result.Content.ReadAsStringAsync();
+
+                    return jsonResult;
+                }
+
+                return "";
             }
         }
     }
