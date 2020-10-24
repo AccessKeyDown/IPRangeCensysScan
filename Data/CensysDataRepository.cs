@@ -30,13 +30,24 @@ namespace IPRangeCensysScan
              }
         }
 
-        public async void BulkInsertRangeData(List<IpRange> range)
+        public async void BulkInsertRangeData(List<IpRange> rangeList)
         {
              using (var dbContext = new DataDbContext())
              {
                  //Ensure database is created
                  dbContext.Database.EnsureCreated();
-                 await dbContext.IpRanges.AddRangeAsync(range);
+                 await dbContext.IpRanges.AddRangeAsync(rangeList);
+                 await dbContext.SaveChangesAsync();
+             }
+        }
+
+         public async void BulkInsertRangeWithJsonData(List<CensysData> censysDataList)
+        {
+             using (var dbContext = new DataDbContext())
+             {
+                 //Ensure database is created
+                 dbContext.Database.EnsureCreated();
+                 await dbContext.CensysDatas.AddRangeAsync(censysDataList);
                  await dbContext.SaveChangesAsync();
              }
         }

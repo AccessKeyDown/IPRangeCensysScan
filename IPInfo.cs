@@ -17,7 +17,8 @@ namespace IPRangeCensysScan
         public List<string> GetIpAddresses()
         {
             string[] fileInfo = File.ReadAllLines(filePath);
-            return fileInfo.OfType<string>().ToList();
+            var listOfData = fileInfo.OfType<string>().ToList();
+            return listOfData.Where(s => !s.Contains('f')).ToList();
         }
     }
 }
