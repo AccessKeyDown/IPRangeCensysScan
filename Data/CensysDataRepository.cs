@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
@@ -59,6 +60,31 @@ namespace IPRangeCensysScan
             {
                 var listOfAccounts = await dbcontext.CensysAccounts.ToListAsync();
                 return listOfAccounts;
+            }
+        }
+
+        public async Task<List<CensysJsonResult>> GetCensysJsonData()
+        {
+
+            using(var dbcontext = new DataDbContext())
+            {
+                var listOfCensysData = await dbcontext.CensysDatas.Select(s => new CensysJsonResult()
+                {
+                    IpRangeId = s.IpRangeId,
+                    IpRange = s.IpRange.Range,
+                    Json = s.Data,
+                    ResponseMessage = s.Message,
+                    ResponseStatusCode = s.StatusCode
+                }).ToListAsync();
+                return listOfCensysData;
+            }
+        }
+        public async void AddCensysParcedData(List<CensysParsedData> dataList)
+        {
+            using(var dbcontext = new DataDbContext())
+            {
+                await dbcontext.CensysParsedData.AddRangeAsync(dataList);
+                await dbcontext.SaveChangesAsync();
             }
         }
     }

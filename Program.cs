@@ -1,19 +1,35 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Json;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace IPRangeCensysScan
 {
     class Program
     {
         public static List<CensysJsonResult> requestedData = new List<CensysJsonResult>();
-        static void Main(string[] args)
+
+        static void AccountInfo()
         {
-            // CensysApiServicee service = new CensysApiServicee("8fb4e440-4b6f-4fec-82d3-dfd675214a9e", "fVw3G5h4vw8E5Tu86a2KrvNLcbCyLaTk");
-            // var data = service.GetAccountData().Result;
+            CensysDataRepository repo = new CensysDataRepository();
+            var accounts = repo.GetAllCensysAccounts().Result;
+            foreach(var account in accounts)
+            {
+               CensysApiServicee service = new CensysApiServicee(account.API_ID, account.Secret);
+               var data = service.GetAccountData().Result;
+               System.Console.WriteLine(data);
+            }
+        }
+
+        static void InsertDataToDb()
+        {
+           
+
             IPinfo ipInfo = new IPinfo("Files/suip.ipranges");
             var ipRangeList = ipInfo.GetIpAddresses();
             CensysDataRepository repo = new CensysDataRepository();
@@ -69,7 +85,7 @@ namespace IPRangeCensysScan
                 }
             }
 
-            // Task.WaitAll(tasks.ToArray());
+            Task.WaitAll(tasks.ToArray());
 
             
             // repo.BulkInsertRangeWithJsonData(requestedData.Select(s => new CensysData()
@@ -82,6 +98,60 @@ namespace IPRangeCensysScan
             //         Range = s.IpRange
             //     }
             // }).ToList());
+
+        }
+
+        static List<CensysParsedData> ParseData()
+        {
+            List<CensysParsedData> listOfParsedData = new List<CensysParsedData>();
+            
+            CensysDataRepository repo = new CensysDataRepository();
+            var censysData = repo.GetCensysJsonData().Result;
+            
+            foreach(var item in censysData)
+            {
+                JsonValue json = JsonValue.Parse(item.Json);
+                dynamic data = JObject.Parse(item.Json);
+                
+                if (data.results != null)
+                {
+                    // foreach loop test
+                    foreach (var result in data.results)
+                    {
+                        var protocols = JArray.Parse(result.protocols.ToString());
+                        List<string> protList = new List<string>();
+                        foreach(var prot in protocols)
+                        {
+                            protList.Add(prot.ToString());
+                        }
+                        var parcedData = new CensysParsedData()
+                        {
+                            IpRangesId = item.IpRangeId,
+                            Ip = result.ip.ToString(),
+                            Protocols = string.Join(',', protList),
+                            Country = result["location.country"] == null ? string.Empty : result["location.country"] .ToString(),
+                            Province = result["location.province"] == null ? string.Empty : result["location.province"].ToString(),
+                            Timezone = result["location.timezone"] == null ? string.Empty : result["location.timezone"].ToString()
+                        };
+                        listOfParsedData.Add(parcedData);
+                    }
+                }
+
+                System.Console.WriteLine("Parsed-" + item.IpRangeId);
+            }
+
+            return listOfParsedData;
+        } 
+
+        static void Main(string[] args)
+        {
+            //Get IpRanges send request to Censys insert json data into table
+            //InsertDataToDb();
+
+            //Parse json data insert to the table
+            // var parsedData = ParseData();
+            // CensysDataRepository repo = new CensysDataRepository();
+            // repo.AddCensysParcedData(parsedData);
 
             System.Console.WriteLine("Done!");
         }

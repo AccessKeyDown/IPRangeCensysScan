@@ -14,6 +14,7 @@ namespace IPRangeCensysScan
         public DbSet<IpRange> IpRanges { get; set; }
         public DbSet<CensysData> CensysDatas { get; set; }
         public DbSet<CensysAccount> CensysAccounts { get; set; }
+        public DbSet<CensysParsedData> CensysParsedData { get; set; }
        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlite(_connectionString, options =>
@@ -28,8 +29,13 @@ namespace IPRangeCensysScan
             {
                 entity.HasKey(e => e.ID);
             });
+
             modelBuilder.Entity<CensysData>()
                         .HasOne(f => f.IpRange);
+
+            modelBuilder.Entity<CensysParsedData>()
+                        .HasOne(f => f.IpRange);
+
            base.OnModelCreating(modelBuilder);
         }
     }
@@ -61,5 +67,21 @@ namespace IPRangeCensysScan
         public string API_ID { get; set; }
 
         public string Secret { get; set; }
+     }
+
+     public class CensysParsedData
+    {
+        [Key]
+        public int Id {get; set;}
+        public string Ip { get; set; }
+        public string Country { get; set; }
+        public string Province { get; set; }
+        public string Timezone { get; set; }
+        public string Protocols { get; set; }
+
+        [ForeignKey(nameof(IpRange))]
+         public int IpRangesId { get; set; }
+
+        public IpRange IpRange { get; set; }
      }
 }
