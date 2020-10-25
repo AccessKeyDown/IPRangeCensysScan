@@ -78,6 +78,8 @@ namespace IPRangeCensysScan
         public string Province { get; set; }
         public string Timezone { get; set; }
         public string Protocols { get; set; }
+        public string Longitude { get; set; }
+        public string Latitude { get; set; }
 
         [ForeignKey(nameof(IpRange))]
          public int IpRangesId { get; set; }

@@ -74,11 +74,13 @@ namespace IPRangeCensysScan
                         Range = data.IpRange
                     }
                 });
+                
+                var prcent = ((j * 100) / totalCount);
+                System.Console.WriteLine("Passed - " + prcent + j);
 
-                System.Console.WriteLine("Passed-" + j);
-
-                if(j % 120 == 0 && j != 0)
+                if(j % 120 == 0 && j != 0 || data.ResponseStatusCode == "TooManyRequests")
                 {
+                    System.Console.WriteLine("Account Changed");
                     accId++;
                 }
             }
@@ -128,7 +130,9 @@ namespace IPRangeCensysScan
                             Protocols = string.Join(',', protList),
                             Country = result["location.country"] == null ? string.Empty : result["location.country"] .ToString(),
                             Province = result["location.province"] == null ? string.Empty : result["location.province"].ToString(),
-                            Timezone = result["location.timezone"] == null ? string.Empty : result["location.timezone"].ToString()
+                            Timezone = result["location.timezone"] == null ? string.Empty : result["location.timezone"].ToString(),
+                            Longitude = result["location.longitude"] == null ? string.Empty : result["location.longitude"].ToString(),
+                            Latitude = result["location.latitude"] == null ? string.Empty : result["location.latitude"].ToString()
                         };
                         listOfParsedData.Add(parcedData);
                     }
