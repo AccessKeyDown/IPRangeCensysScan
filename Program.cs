@@ -28,13 +28,11 @@ namespace IPRangeCensysScan
 
         static void InsertDataToDb()
         {
-           
-
             IPinfo ipInfo = new IPinfo("Files/suip.ipranges");
             var ipRangeList = ipInfo.GetIpAddresses();
             CensysDataRepository repo = new CensysDataRepository();
             
-            var tasks = new List<Task>();
+            // var tasks = new List<Task>();
 
             int totalCount = ipRangeList.Count;
             System.Console.WriteLine(totalCount);
@@ -63,7 +61,7 @@ namespace IPRangeCensysScan
 
                 var data = service.GetJsonSearchData(IndexEnum.ipv4, new CensysSearchPost()
                                                                {
-                                                                   query = ipRange
+                                                                   query = $"ip:{ipRange}"
                                                                }).Result;
 
                 repo.InsertRangeWithJsonData(new CensysData()
@@ -85,7 +83,7 @@ namespace IPRangeCensysScan
                 }
             }
 
-            Task.WaitAll(tasks.ToArray());
+            // Task.WaitAll(tasks.ToArray());
 
             
             // repo.BulkInsertRangeWithJsonData(requestedData.Select(s => new CensysData()
@@ -98,7 +96,6 @@ namespace IPRangeCensysScan
             //         Range = s.IpRange
             //     }
             // }).ToList());
-
         }
 
         static List<CensysParsedData> ParseData()
@@ -145,8 +142,10 @@ namespace IPRangeCensysScan
 
         static void Main(string[] args)
         {
+            //AccountInfo();
+
             //Get IpRanges send request to Censys insert json data into table
-            //InsertDataToDb();
+            InsertDataToDb();
 
             //Parse json data insert to the table
             // var parsedData = ParseData();
